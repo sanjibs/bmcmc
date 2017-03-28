@@ -21,5 +21,4 @@ For latest documentation see here.
 Installation
 -------------
 pip install bmcmc
-pip install bmcmc --user
 
