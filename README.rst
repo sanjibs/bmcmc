@@ -16,7 +16,7 @@ Sanjib Sharma
 
 Documentation
 --------------
-For latest documentation see here.
+For latest documentation see http://bmcmc.readthedocs.io/en/latest/.
 
 Installation
 -------------
