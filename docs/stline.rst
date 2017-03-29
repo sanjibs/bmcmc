@@ -5,6 +5,7 @@ class derived from the parent class ``bmcmc.Model`` . The user has to write 3 me
 * ``set_descr(self)``: This sets the dictionary ``self.descr`` that describes the parameters :math:`\theta` of the
   model.
   Example::
+  
   self.descr[name] =[level, value, sigma, latex_name, value_min, value_max]  
   self.descr['m']  =['l0' , 1.0  , 0.2  , '$m$'     , -1e10    , 1e10     ]
   
