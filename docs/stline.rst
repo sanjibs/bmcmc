@@ -8,7 +8,7 @@ from the parent class ``bmcmc.Model`` and
 the user has to write 3 methods for his subclass. We
 show this with a simple example.
 
-<<<<<<< HEAD
+
 Fitting a Gaussian distribution 
 --------------------------------
 A Gaussian or a normal distribution is given by 
