@@ -8,28 +8,12 @@ from the parent class ``bmcmc.Model`` and
 the user has to write 3 methods for his subclass. We
 show this with a simple example.
 
-
 Fitting a Gaussian distribution 
 --------------------------------
 A Gaussian or a normal distribution is given by 
 :math:`\mathcal{N}(x|\mu,\sigma^2)=\frac{1}{\sqrt{2 \pi}\sigma}\exp\left[-\frac{(x-\mu)^2}{2\sigma^2}\right]`
 and we fit this to an array of values representing samples from
 a one dimensional distribution.::
-=======
-* ``set_descr(self)``: This sets the dictionary ``self.descr`` that describes the parameters :math:`\theta` of the
-  model.
-  Example::
-  
-  self.descr[name] =[level, value, sigma, latex_name, value_min, value_max]  
-  self.descr['m']  =['l0' , 1.0  , 0.2  , '$m$'     , -1e10    , 1e10     ]
-  
-  For a hierarchical model parameters can exist at various levels. We have two options to choose from 'l0' or 'l1'.  'l0'denotes the top level, for example the hyperparameters, and 'l1' denotes the level below it.  
-  
-* ``set_args(self)``: This sets the dictionary ``self.args`` that specifies the data :math:`D` to be used by
-  the model. Any parameters :math:`\theta` or variables that will be used to
-  compute the posterior, should also be initialized here. Any remaining   
-  uninitialized parameters from ``self.descr`` are automatically initialized.
->>>>>>> b4ef02830ed4ff7a39351f1de9ddd1b6fc260611
 
     import bmcmc 
     import scipy.stats
