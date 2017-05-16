@@ -14,12 +14,12 @@ Example:
 class gauss1(bmcmc.Model):
     def set_descr(self):
         # setup descriptor
-        # self.descr[varname]=[type,value,sigma,latexname,min_val,max_val]
-        self.descr['mu']     =['p',0.0,1.0,r'$\mu$ ',-500,500.0]
-        self.descr['sigma']  =['p',1.0,1.0,r'$\sigma$ ',1e-10,1e3]
-        self.descr['x']      =['d',0.0,1.0,r'$x$ ',-500.0,500.0]
-        self.descr['xt']     =['d',0.0,1.0,r'$x_t$ ',-500.0,500.0]
-        self.descr['sigma_x']=['p',0.5,1.0,r'$\sigma_x$ ',1e-10,1e3]
+        #self.descr[varname] =[type, value, sigma,     latexname, min_val, max_val]
+        self.descr['mu']     =['l0',   0.0,   1.0,      r'$\mu$',    -500,   500.0]
+        self.descr['sigma']  =['l0',   1.0,   1.0,   r'$\sigma$',  1e-10,      1e3]
+        self.descr['x']      =['l1',   0.0,   1.0,        r'$x$', -500.0,    500.0]
+        self.descr['xt']     =['l1',   0.0,   1.0,      r'$x_t$', -500.0,    500.0]
+        self.descr['sigma_x']=['l0',   0.5,   1.0, r'$\sigma_x$',  1e-10,      1e3]
 
     def set_args(self):
         # setup data points 
@@ -36,7 +36,14 @@ class gauss1(bmcmc.Model):
 
 model=gauss1(eargs={'dsize':100})
 model.sample(['xt','mu','sigma'],10000)
-model.info()
+model.info(burn=1000)
+
+
+model.info(burn=1000,latex=True)
+model.plot(burn=1000)
+model.plot(keys=['mu'],burn=1000)
+print model.chain['mu']
+print model.chain['sigma']
 
 """
 
@@ -204,22 +211,22 @@ class Model():
         return np.array([self.descr[name][1] for name in names])
 
 
-    def sample(self,varnames,iterations,atime=10,ptime=1000):
+    def sample(self,varnames,iterations,ptime=1000,atime=10):
         """
-        Run a markov chain monte sampler
+        Run the markov chain monte carlo sampler
         Parameters
         ----------
         varnames: a list of names specifying variables over which to run MCMC
         iterations: desired length of the MCMC chain 
-        atime: iterations after which to adapt the proposal distribution        
         ptime: iterations after which to print summary on screen       
+        atime: iterations after which to adapt the proposal distribution        
         Creates
         --------
-        names0: the name of parameters of the model that are varied (top level)
-        names1: the name of parameters of the model that are varied (next level)
-        mu:     the mean value of all estimated parameters
-        sigma:  the stddev of all estimated parameters
-        chain:  mcmc chain for each estimated parameter at the top level
+        names0: (list) the name of parameters of the model that are varied (top level)
+        names1: (list) the name of parameters of the model that are varied (next level)
+        chain:  (dict) of ndarrays) mcmc chain for each estimated parameter at at level-0
+        mu:     (dict) the mean value of all estimated parameters 
+        sigma:  (dict) the stddev of all estimated parameters 
         """
         pnames=[]
         dnames=[]
@@ -264,12 +271,20 @@ class Model():
         self.names1=dnames
 
     def best_fit(self,burn=1000):
+        """
+        an array of best fit values of level-0 parameteres, ordered as in names0
+        """
         return np.array([np.mean(self.chain[key][burn:]) for key in self.names0])
         
 
     def info(self,burn=1000,latex=False):
         """
-        Print statistics of mcmc chain
+        Print summary statistics of the mcmc chain, like mean and standard deviation of parameters .
+        Parameters
+        ----------
+        burn: (int) The number of initial iterations to ignore.
+        latex: (boolean) Make a latex table and print results with 
+               correct number of significant digits.
         """
         if latex:
             s='\\begin{tabular} { l  c} \n'
@@ -604,9 +619,9 @@ class _MH():
         """
         print '%-4s %10i %6.3f %6.3f %6.3f %6.3f'%('MH ',self.i,self.alpha0,np.mean(np.array(self.alpha)),np.mean(np.array(self.alpha)[-len(self.alpha)/2:]),self.lam),np.diag(np.exp(self.lam)*self.cov)
         x=np.array(self.chain)
-        ntot=x.shape[0]
+        ntot=max(x.shape[0],4)
         for i in range(x.shape[1]):
-            print '%16s %12g %12g'%(self.varnames[i],np.mean(x[:,i]),np.std(x[:,i]))
+            print '%16s %12g %12g %12g %12g'%(self.varnames[i],np.mean(x[:,i]),np.std(x[:,i]),np.mean(x[ntot/2:,i]),np.std(x[ntot/2:,i]))
 
     def get_chain(self,burn=0,thin=1):
         """
