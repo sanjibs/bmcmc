@@ -119,8 +119,8 @@ Plot final results for specific parameters
    print mymodel.chain['m']
    print mymodel.chain['c']
 
-Hierarchical Bayesian model.
------------------------------
+Bayesian hierarchical model (BHM).
+-----------------------------------
 We again consider the example of fitting a Gaussian
 distribution to some observed data. This time the observed
 data :math:`x` has uncertainty :math:`\sigma_x` associated
