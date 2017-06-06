@@ -22,6 +22,9 @@ For non-root installation do::
 
     >pip install bmcmc --user
 
+Also available at `https://github.com/sanjibs/bmcmc/
+<https://github.com/sanjibs/bmcmc/>`_.
+
 
 Tutorial
 ---------
@@ -33,5 +36,7 @@ Tutorial
 
 
 
-More deatils (coming soon)
+More details (coming soon)
 ---------------------------
+
+ 

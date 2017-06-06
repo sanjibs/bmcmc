@@ -409,7 +409,8 @@ observational uncertainty (variance :math:`\sigma_v^2`) and
 intrinsic variability of a star (variance :math:`S^2`) and we can
 model this by a Gaussian function
 :math:`\mathcal{N}(.|v,\sigma_v^2+S^2)`. 
-For radial velocity data $D$ defined as a set of radial velocities :math:`\{v_1,...,v_M\}` at various
+For radial velocity data :math:`D` defined as a set of
+radial velocities :math:`\{v_1,...,v_M\}` at various
 times :math:`\{t_1,...,t_M\}`, one can fit and constrain seven 
 parameters,  :math:`\theta=(v_{0}, \kappa, T, e, \tau, \omega, S)`,
 using the Bayes theorem as shown below   
